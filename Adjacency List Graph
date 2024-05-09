@@ -1,0 +1,48 @@
+class Graph {
+    constructor() {
+        this.adjacencyList = new Map();
+    }
+
+    addVertex(vertex) {
+        if (!this.adjacencyList.has(vertex)) {
+            this.adjacencyList.set(vertex, []);
+        }
+    }
+
+    removeVertex(vertex) {
+        this.adjacencyList.delete(vertex);
+        // Remove any edges that connect to this vertex
+        for (let [key, value] of this.adjacencyList) {
+            this.adjacencyList.set(key, value.filter(v => v !== vertex));
+        }
+    }
+
+    addEdge(vertex1, vertex2) {
+        this.adjacencyList.get(vertex1).push(vertex2);
+        this.adjacencyList.get(vertex2).push(vertex1);
+    }
+
+    removeEdge(vertex1, vertex2) {
+        this.adjacencyList.set(vertex1, this.adjacencyList.get(vertex1).filter(v => v !== vertex2));
+        this.adjacencyList.set(vertex2, this.adjacencyList.get(vertex2).filter(v => v !== vertex1));
+    }
+
+    print() {
+        for (let [vertex, edges] of this.adjacencyList) {
+            console.log(vertex, '->', edges.join(', '));
+        }
+    }
+}
+
+// Example usage:
+const graph = new Graph();
+graph.addVertex('A');
+graph.addVertex('B');
+graph.addVertex('C');
+graph.addEdge('A', 'B');
+graph.addEdge('A', 'C');
+graph.addEdge('B', 'C');
+graph.print();
+graph.removeVertex('B');
+console.log('After removing vertex B:');
+graph.print();
