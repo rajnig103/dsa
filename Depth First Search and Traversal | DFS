@@ -66,25 +66,18 @@ class Graph {
     }
 
     dfslist() {
-        const visited = new Set();
-
-        const dfs = (vertex) => {
-            visited.add(vertex);
-            console.log("Visited:", vertex);
-
-            const neighbors = this.adjacencyList.get(vertex);
-            for (const neighbor of neighbors) {
-                if (!visited.has(neighbor)) {
-                    dfs(neighbor);
+        this.visited = new Set();
+        for(let [key,value] of this.adajacnylist){
+             
+            const neghibers = value;
+            this.visited.add(key);
+            for (let nighber of neghibers) {
+                if (!this.visited.has(nighber)) {
+                    this.visited.add(nighber);
                 }
             }
-        };
-
-        for (let [vertex] of this.adjacencyList) {
-            if (!visited.has(vertex)) {
-                dfs(vertex);
-            }
         }
+       console.log("visited", this.visited);
     }
 }
 
